@@ -1,0 +1,612 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VELORA | Virtual Fashion Showroom</title>
+
+<script type="importmap">
+{
+ "imports":{
+  "three":"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js"
+ }
+}
+</script>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+
+body{
+ background:#102d35;
+ color:#fff;
+ font-family:Poppins,sans-serif;
+ overflow:hidden;
+}
+
+#showroom{
+ position:fixed;
+ inset:0;
+}
+
+canvas{display:block}
+
+header{
+ position:absolute;
+ top:0;
+ width:100%;
+ padding:23px 6%;
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ z-index:5;
+ background:linear-gradient(#031f2acc,transparent);
+}
+
+.logo{
+ font-family:'Playfair Display',serif;
+ font-size:29px;
+ letter-spacing:5px;
+ color:#f8c030;
+}
+
+nav{display:flex;gap:28px}
+nav a{
+ text-decoration:none;
+ color:white;
+ font-size:11px;
+ letter-spacing:2px;
+}
+
+.intro{
+ position:absolute;
+ left:7%;
+ top:35%;
+ z-index:3;
+ max-width:390px;
+ pointer-events:none;
+}
+
+.intro small{
+ color:#f8c030;
+ letter-spacing:5px;
+ font-size:10px;
+}
+
+.intro h1{
+ font-family:'Playfair Display',serif;
+ font-size:clamp(48px,6vw,78px);
+ line-height:1.1;
+ margin:20px 0;
+ font-weight:500;
+}
+
+.intro p{
+ color:#d5d8d4;
+ line-height:2;
+ font-size:13px;
+ margin-bottom:25px;
+}
+
+.gold{color:#f8c030}
+
+.action{
+ pointer-events:auto;
+ display:inline-block;
+ padding:14px 25px;
+ border:1px solid #f8c030;
+ color:#f8c030;
+ text-decoration:none;
+ letter-spacing:2px;
+ font-size:11px;
+ transition:.3s;
+}
+
+.action:hover{
+ background:#f8c030;
+ color:#092b35;
+}
+
+.controls{
+ position:absolute;
+ bottom:25px;
+ left:50%;
+ transform:translateX(-50%);
+ text-align:center;
+ font-size:10px;
+ color:#eee;
+ letter-spacing:2px;
+ z-index:3;
+ width:90%;
+}
+
+.top-right{
+ position:absolute;
+ right:6%;
+ top:110px;
+ z-index:3;
+ text-align:right;
+ color:#f8c030;
+ font-size:11px;
+ letter-spacing:2px;
+}
+
+.exit{
+ position:absolute;
+ right:6%;
+ bottom:30px;
+ z-index:4;
+}
+
+#info{
+ position:absolute;
+ bottom:90px;
+ right:6%;
+ width:240px;
+ padding:20px;
+ background:#062630ed;
+ border:1px solid #f8c03080;
+ display:none;
+ z-index:5;
+}
+
+#info h3{
+ font-family:'Playfair Display';
+ color:#f8c030;
+ margin-bottom:8px;
+}
+
+#info p{
+ color:#ddd;
+ font-size:12px;
+ line-height:1.8;
+}
+
+.close{
+ color:#f8c030;
+ float:right;
+ cursor:pointer;
+}
+
+@media(max-width:650px){
+ header{padding:18px 5%}
+ .logo{font-size:23px}
+ nav{gap:12px}
+ nav a{font-size:8px}
+ .intro{
+  top:auto;
+  bottom:100px;
+  left:6%;
+  right:6%;
+ }
+ .intro h1{font-size:48px;margin:10px 0}
+ .intro p{font-size:11px;line-height:1.6}
+ .top-right{top:90px;font-size:9px}
+ .controls{font-size:8px;bottom:17px}
+ .exit{bottom:65px}
+ #info{bottom:110px;width:200px}
+}
+</style>
+</head>
+
+<body>
+
+<div id="showroom"></div>
+
+<header>
+ <div class="logo">VELORA.</div>
+ <nav>
+  <a href="index.html">HOME</a>
+  <a href="#collection" onclick="showCollection()">COLLECTION</a>
+ </nav>
+</header>
+
+<div class="intro">
+ <small>WELCOME TO OUR WORLD</small>
+ <h1>Experience<br><span class="gold">Luxury.</span></h1>
+ <p>
+  Step inside the world of Velora.
+  Explore our virtual fashion showroom,
+  discover beautiful styles and experience
+  fashion in a new dimension.
+ </p>
+ <a href="javascript:void(0)" class="action"
+ onclick="explore()">EXPLORE SHOWROOM</a>
+</div>
+
+<div class="top-right">
+ VIRTUAL FASHION EXPERIENCE<br>
+ <span style="color:white">EST. 2026</span>
+</div>
+
+<div id="info">
+ <span class="close" onclick="closeInfo()">✕</span>
+ <h3 id="infoTitle">Velora Collection</h3>
+ <p id="infoText">Discover our latest styles.</p>
+</div>
+
+<div class="controls">
+ DRAG TO ROTATE · SCROLL TO ZOOM · CLICK DISPLAY PLATFORMS
+</div>
+
+<script type="module">
+import * as THREE from 'three';
+
+const container=document.getElementById('showroom');
+
+const scene=new THREE.Scene();
+scene.background=new THREE.Color(0x152c32);
+scene.fog=new THREE.Fog(0x152c32,18,38);
+
+const camera=new THREE.PerspectiveCamera(
+ 48,window.innerWidth/window.innerHeight,.1,100
+);
+camera.position.set(0,4,13);
+
+const renderer=new THREE.WebGLRenderer({
+ antialias:true
+});
+renderer.setSize(window.innerWidth,window.innerHeight);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
+renderer.shadowMap.enabled=true;
+renderer.shadowMap.type=THREE.PCFSoftShadowMap;
+renderer.toneMapping=THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure=1.35;
+container.appendChild(renderer.domElement);
+
+// MATERIALS
+const cream=new THREE.MeshStandardMaterial({
+ color:0xe8dfce,roughness:.3
+});
+const gold=new THREE.MeshStandardMaterial({
+ color:0xd6a63d,metalness:.8,roughness:.2
+});
+const navy=new THREE.MeshStandardMaterial({
+ color:0x123d49,roughness:.4
+});
+const marble=new THREE.MeshStandardMaterial({
+ color:0xd8cdb9,roughness:.25,metalness:.1
+});
+
+// LIGHTS
+scene.add(new THREE.AmbientLight(0xffffff,1.4));
+
+function spotlight(x,y,z,power,color){
+ const light=new THREE.SpotLight(color,power,25,Math.PI/5,.5,1);
+ light.position.set(x,y,z);
+ light.target.position.set(x,0,0);
+ light.castShadow=true;
+ scene.add(light,light.target);
+}
+
+spotlight(-5,9,4,150,0xffe0a0);
+spotlight(0,10,0,180,0xffffff);
+spotlight(5,9,3,150,0xffd48b);
+
+const goldGlow=new THREE.PointLight(0xf8c030,60,15);
+goldGlow.position.set(0,5,-6);
+scene.add(goldGlow);
+
+// ROOM FLOOR
+const floor=new THREE.Mesh(
+ new THREE.PlaneGeometry(30,30),
+ marble
+);
+floor.rotation.x=-Math.PI/2;
+floor.position.y=-.1;
+floor.receiveShadow=true;
+scene.add(floor);
+
+// WALLS
+function wall(w,h,x,y,z,material){
+ const mesh=new THREE.Mesh(
+  new THREE.BoxGeometry(w,h,.3),material
+ );
+ mesh.position.set(x,y,z);
+ mesh.receiveShadow=true;
+ scene.add(mesh);
+}
+wall(18,11,0,5.4,-7,cream);
+wall(.3,11,-9,5.4,0,cream);
+wall(.3,11,9,5.4,0,cream);
+
+// BACK WALL GOLDEN PANELS
+for(let x=-7;x<=7;x+=3.5){
+ const panel=new THREE.Mesh(
+  new THREE.BoxGeometry(2.5,6,.12),
+  new THREE.MeshStandardMaterial({
+   color:0xd3c4aa,roughness:.5
+  })
+ );
+ panel.position.set(x,3.4,-6.78);
+ scene.add(panel);
+
+ const trim=new THREE.Mesh(
+  new THREE.BoxGeometry(2.6,.055,.15),gold
+ );
+ trim.position.set(x,6.45,-6.65);
+ scene.add(trim);
+}
+
+// GOLD ARCH DECORATION
+for(let x=-6;x<=6;x+=6){
+ const arch=new THREE.Mesh(
+  new THREE.TorusGeometry(2, .09,12,80,Math.PI),
+  gold
+ );
+ arch.position.set(x,2.5,-6.45);
+ scene.add(arch);
+}
+
+// VELORA SIGN
+const sign=new THREE.Mesh(
+ new THREE.BoxGeometry(5,.95,.15),
+ navy
+);
+sign.position.set(0,7,-6.3);
+scene.add(sign);
+
+// SHOWROOM DISPLAY PLATFORMS
+const displays=[];
+
+function platform(x,z){
+ const base=new THREE.Mesh(
+  new THREE.CylinderGeometry(1.3,1.4,.35,64),
+  gold
+ );
+ base.position.set(x,.1,z);
+ base.castShadow=true;
+ scene.add(base);
+
+ const top=new THREE.Mesh(
+  new THREE.CylinderGeometry(1.22,1.22,.12,64),
+  cream
+ );
+ top.position.set(x,.33,z);
+ scene.add(top);
+
+ displays.push({x,z,base,top});
+}
+platform(-4,-2);
+platform(0,-3);
+platform(4,-2);
+
+// MANNEQUIN DISPLAY
+function makeMannequin(x,z,color){
+ const group=new THREE.Group();
+ group.position.set(x,.4,z);
+ scene.add(group);
+
+ const cloth=new THREE.MeshStandardMaterial({
+  color,roughness:.4
+ });
+ const skin=new THREE.MeshStandardMaterial({
+  color:0xc99877,roughness:.6
+ });
+
+ function part(geometry,material,x,y,z){
+  const mesh=new THREE.Mesh(geometry,material);
+  mesh.position.set(x,y,z);
+  mesh.castShadow=true;
+  group.add(mesh);
+  return mesh;
+ }
+
+ // Head and neck
+ part(new THREE.SphereGeometry(.29,24,24),skin,0,1.85,0);
+ part(new THREE.CylinderGeometry(.12,.12,.3,20),skin,0,1.5,0);
+
+ // Torso
+ part(new THREE.CylinderGeometry(.36,.48,1.15,32),cloth,0,.85,0);
+
+ // Dress skirt
+ part(new THREE.CylinderGeometry(.43,.8,1.15,40),cloth,0,-.3,0);
+
+ // Arms
+ for(let s of [-1,1]){
+  const arm=part(
+   new THREE.CapsuleGeometry(.105,.85,5,12),
+   cloth,s*.49,.8,0
+  );
+  arm.rotation.z=s*.18;
+ }
+
+ // Legs
+ for(let s of [-1,1]){
+  part(new THREE.CapsuleGeometry(.13,.7,5,12),
+   skin,s*.2,-1.2,0);
+ }
+
+ // Gold base
+ const stand=part(
+  new THREE.CylinderGeometry(.55,.6,.08,40),
+  gold,0,-1.8,0
+ );
+
+ return group;
+}
+
+const models=[
+ makeMannequin(-4, -2,0x9c394f),
+ makeMannequin(0,-3,0xd8c9b4),
+ makeMannequin(4,-2,0x173c4a)
+];
+
+// CLOTHING RACKS
+function clothingRack(x,z){
+ const rack=new THREE.Group();
+ rack.position.set(x,0,z);
+ scene.add(rack);
+
+ function rod(geometry,material,px,py,pz){
+  const m=new THREE.Mesh(geometry,material);
+  m.position.set(px,py,pz);
+  rack.add(m);
+  return m;
+ }
+
+ rod(new THREE.CylinderGeometry(.045,.045,4,16),gold,0,2.4,0);
+
+ for(let s of [-1,1]){
+  rod(new THREE.CylinderGeometry(.04,.04,2.8,12),
+   gold,s*1.5,.2,0);
+ }
+
+ const bar=rod(new THREE.CylinderGeometry(.04,.04,3.3,16),
+  gold,0,3.8,0);
+ bar.rotation.z=Math.PI/2;
+
+ const colors=[0x9a4055,0xe5d4b7,0x1d4751,0xc9a36a,0x333333];
+
+ for(let i=0;i<5;i++){
+  const hanger=new THREE.Group();
+  hanger.position.set(-1.2+i*.6,3.65,0);
+
+  const hook=new THREE.Mesh(
+   new THREE.TorusGeometry(.09,.018,8,20,Math.PI),
+   gold
+  );
+  hook.rotation.z=Math.PI;
+  hanger.add(hook);
+
+  const dress=new THREE.Mesh(
+   new THREE.CylinderGeometry(.17,.29,.95,24),
+   new THREE.MeshStandardMaterial({
+    color:colors[i],roughness:.5
+   })
+  );
+  dress.position.y=-.6;
+  hanger.add(dress);
+  rack.add(hanger);
+ }
+}
+
+clothingRack(-7,-1);
+clothingRack(7,-1);
+
+// CEILING LIGHT RINGS
+for(let x=-5;x<=5;x+=5){
+ const ring=new THREE.Mesh(
+  new THREE.TorusGeometry(1.4,.035,12,80),
+  gold
+ );
+ ring.rotation.x=Math.PI/2;
+ ring.position.set(x,9,-1);
+ scene.add(ring);
+}
+
+// CLICKABLE DISPLAY PLATFORMS
+const raycaster=new THREE.Raycaster();
+const pointer=new THREE.Vector2();
+
+window.addEventListener('click',e=>{
+ pointer.x=(e.clientX/window.innerWidth)*2-1;
+ pointer.y=-(e.clientY/window.innerHeight)*2+1;
+
+ raycaster.setFromCamera(pointer,camera);
+
+ const hits=raycaster.intersectObjects(
+  displays.flatMap(d=>[d.base,d.top])
+ );
+
+ if(hits.length){
+  const obj=hits[0].object;
+  const index=displays.findIndex(
+   d=>d.base===obj||d.top===obj
+  );
+
+  const titles=[
+   'Western Collection',
+   'Elegant Dresses',
+   'Traditional Kurtis'
+  ];
+
+  const descriptions=[
+   'Explore modern western outfits and fashionable everyday styles.',
+   'Discover beautiful dresses for special occasions and celebrations.',
+   'Explore elegant traditional styles with a modern touch.'
+  ];
+
+  document.getElementById('infoTitle').innerText=titles[index];
+  document.getElementById('infoText').innerText=descriptions[index];
+  document.getElementById('info').style.display='block';
+ }
+});
+
+// DRAG CAMERA
+let dragging=false;
+let lastX=0;
+let angle=0;
+let targetAngle=0;
+let zoom=13;
+
+renderer.domElement.addEventListener('pointerdown',e=>{
+ dragging=true;
+ lastX=e.clientX;
+});
+
+window.addEventListener('pointerup',()=>{
+ dragging=false;
+});
+
+window.addEventListener('pointermove',e=>{
+ if(dragging){
+  targetAngle+=(e.clientX-lastX)*.005;
+  lastX=e.clientX;
+ }
+});
+
+renderer.domElement.addEventListener('wheel',e=>{
+ zoom+=e.deltaY*.008;
+ zoom=Math.max(8,Math.min(19,zoom));
+},{passive:true});
+
+// ANIMATION
+function animate(){
+ requestAnimationFrame(animate);
+
+ angle+=(targetAngle-angle)*.05;
+
+ camera.position.x=Math.sin(angle)*zoom*.35;
+ camera.position.z=zoom;
+ camera.lookAt(0,3,0);
+
+ models.forEach((m,i)=>{
+  m.rotation.y=Math.sin(Date.now()*.0005+i)*.12;
+ });
+
+ displays.forEach((d,i)=>{
+  d.base.rotation.y+=.002;
+ });
+
+ renderer.render(scene,camera);
+}
+animate();
+
+window.addEventListener('resize',()=>{
+ camera.aspect=window.innerWidth/window.innerHeight;
+ camera.updateProjectionMatrix();
+ renderer.setSize(window.innerWidth,window.innerHeight);
+});
+
+window.explore=function(){
+ document.querySelector('.intro').style.display='none';
+};
+
+window.closeInfo=function(){
+ document.getElementById('info').style.display='none';
+};
+
+window.showCollection=function(){
+ document.querySelector('.intro').style.display='block';
+ document.querySelector('.intro h1').innerHTML=
+ 'Discover<br><span class="gold">Your Style.</span>';
+ document.querySelector('.intro p').innerText=
+ 'Explore our Western, traditional and elegant fashion collections.';
+ document.querySelector('.intro .action').innerText='EXPLORE SHOWROOM';
+};
+</script>
+</body>
+</html>
