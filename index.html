@@ -5,22 +5,32 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>VELORA FASHION | Luxury Womenswear</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Plus+Jakarta+Sans:wght@300;400;500&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Montserrat:wght@200;300;400;500&display=swap');
+
+    :root {
+      --bg-color: #0c0b0e;
+      --card-bg: rgba(255, 255, 255, 0.02);
+      --border-color: rgba(235, 185, 195, 0.15);
+      --accent-pink: #ebb3c3;
+      --text-main: #f9f6f8;
+      --text-muted: #9e979f;
+    }
 
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
+      scroll-behavior: smooth;
     }
 
     body {
-      background-color: #070608;
-      color: #f7f3f5;
-      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      font-family: 'Montserrat', sans-serif;
       overflow-x: hidden;
     }
 
-    /* 3D Canvas Background */
+    /* 3D Background Canvas */
     #webgl-canvas {
       position: fixed;
       top: 0;
@@ -31,136 +41,172 @@
       pointer-events: none;
     }
 
-    /* Overlay Content */
-    .content {
+    /* Wrapper */
+    .site-wrapper {
       position: relative;
       z-index: 2;
     }
 
-    /* Navigation */
-    nav {
+    /* Header & Navigation */
+    header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 2rem 6%;
-      background: rgba(7, 6, 8, 0.6);
-      backdrop-filter: blur(15px);
-      border-bottom: 1px solid rgba(242, 196, 206, 0.08);
+      padding: 2rem 5%;
+      background: rgba(12, 11, 14, 0.75);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border-color);
       position: sticky;
       top: 0;
-      z-index: 10;
+      z-index: 100;
     }
 
-    .logo-img {
-      height: 48px;
+    .brand-logo {
+      height: 50px;
       width: auto;
       object-fit: contain;
-      filter: drop-shadow(0 2px 10px rgba(242, 196, 206, 0.25));
+      filter: drop-shadow(0 2px 8px rgba(235, 185, 195, 0.3));
     }
 
     .nav-links {
       display: flex;
-      gap: 2.5rem;
+      gap: 3rem;
       list-style: none;
-      font-size: 0.8rem;
-      letter-spacing: 3px;
+      font-size: 0.75rem;
+      letter-spacing: 4px;
       text-transform: uppercase;
+      font-weight: 300;
     }
 
     .nav-links a {
-      color: #c9c3c7;
+      color: var(--text-main);
       text-decoration: none;
       transition: color 0.3s ease;
+      position: relative;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 1px;
+      bottom: -4px;
+      left: 0;
+      background-color: var(--accent-pink);
+      transition: width 0.3s ease;
     }
 
     .nav-links a:hover {
-      color: #f2c4ce;
+      color: var(--accent-pink);
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
     }
 
     /* Hero Section */
     .hero {
-      height: 90vh;
+      min-height: 85vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       text-align: center;
-      padding: 0 1.5rem;
+      padding: 4rem 1.5rem;
     }
 
-    .hero-logo-large {
-      max-width: 280px;
+    .hero-emblem {
+      max-width: 240px;
       width: 100%;
       height: auto;
       margin-bottom: 2rem;
-      filter: drop-shadow(0 5px 20px rgba(242, 196, 206, 0.2));
-      animation: floatLogo 4s ease-in-out infinite;
+      filter: drop-shadow(0 6px 16px rgba(235, 185, 195, 0.25));
+      animation: gentleFloat 5s ease-in-out infinite;
     }
 
-    @keyframes floatLogo {
+    @keyframes gentleFloat {
       0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-8px); }
+      50% { transform: translateY(-10px); }
     }
 
     .hero h1 {
-      font-family: 'Cinzel', serif;
-      font-size: 3.5rem;
-      font-weight: 500;
-      letter-spacing: 6px;
-      margin-bottom: 1rem;
-      background: linear-gradient(135deg, #ffffff 30%, #f2c4ce 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 4.2rem;
+      font-weight: 300;
+      letter-spacing: 8px;
+      margin-bottom: 1.2rem;
+      color: #ffffff;
+      text-transform: uppercase;
+    }
+
+    .hero h1 span {
+      color: var(--accent-pink);
+      font-style: italic;
     }
 
     .hero p {
-      font-size: 1.05rem;
-      color: #a39b9f;
-      max-width: 500px;
-      margin-bottom: 2.5rem;
-      line-height: 1.8;
-      font-weight: 300;
-      letter-spacing: 1px;
+      font-size: 1rem;
+      color: var(--text-muted);
+      max-width: 580px;
+      margin-bottom: 3rem;
+      line-height: 1.9;
+      font-weight: 200;
+      letter-spacing: 1.5px;
     }
 
-    .btn {
-      padding: 1rem 3rem;
-      border: 1px solid #f2c4ce;
+    .cta-btn {
+      padding: 1.1rem 3.2rem;
+      border: 1px solid var(--accent-pink);
       border-radius: 50px;
-      background: linear-gradient(135deg, rgba(242, 196, 206, 0.15), rgba(242, 196, 206, 0.05));
-      color: #ffffff;
-      font-size: 0.8rem;
-      letter-spacing: 3px;
+      background: rgba(235, 185, 195, 0.05);
+      color: var(--text-main);
+      font-size: 0.75rem;
+      letter-spacing: 4px;
       text-transform: uppercase;
       cursor: pointer;
       backdrop-filter: blur(10px);
       transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      text-decoration: none;
     }
 
-    .btn:hover {
-      background: #f2c4ce;
-      color: #070608;
-      box-shadow: 0 10px 30px rgba(242, 196, 206, 0.35);
+    .cta-btn:hover {
+      background: var(--accent-pink);
+      color: var(--bg-color);
+      box-shadow: 0 12px 35px rgba(235, 185, 195, 0.3);
       transform: translateY(-3px);
     }
 
-    /* Collections Showcase */
-    .collections {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 2.5rem;
-      padding: 6rem 8%;
-      max-width: 1350px;
+    /* Collections Section */
+    .collections-container {
+      max-width: 1300px;
       margin: 0 auto;
+      padding: 6rem 5%;
+    }
+
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.5rem;
+      text-align: center;
+      letter-spacing: 5px;
+      margin-bottom: 4rem;
+      font-weight: 300;
+      text-transform: uppercase;
+      color: var(--text-main);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2.5rem;
     }
 
     .card {
-      background: linear-gradient(145deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01));
-      border: 1px solid rgba(242, 196, 206, 0.12);
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
       backdrop-filter: blur(15px);
       padding: 3.5rem 2.5rem;
-      border-radius: 16px;
-      text-align: center;
+      border-radius: 12px;
+      text-align: left;
       transition: all 0.4s ease;
       position: relative;
       overflow: hidden;
@@ -173,50 +219,59 @@
       left: 0;
       width: 100%;
       height: 2px;
-      background: linear-gradient(90deg, transparent, #f2c4ce, transparent);
+      background: linear-gradient(90deg, transparent, var(--accent-pink), transparent);
       opacity: 0;
       transition: opacity 0.4s ease;
     }
 
     .card:hover {
       transform: translateY(-8px);
-      border-color: rgba(242, 196, 206, 0.4);
-      background: linear-gradient(145deg, rgba(242, 196, 206, 0.06), rgba(255, 255, 255, 0.02));
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+      border-color: rgba(235, 185, 195, 0.4);
+      background: rgba(235, 185, 195, 0.03);
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6);
     }
 
     .card:hover::before {
       opacity: 1;
     }
 
-    .card h3 {
-      font-family: 'Cinzel', serif;
-      font-size: 1.4rem;
+    .card span {
+      font-size: 0.7rem;
       letter-spacing: 3px;
+      color: var(--accent-pink);
+      text-transform: uppercase;
+      display: block;
       margin-bottom: 1rem;
-      color: #f2c4ce;
-      font-weight: 500;
+    }
+
+    .card h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.8rem;
+      letter-spacing: 2px;
+      margin-bottom: 1rem;
+      font-weight: 400;
     }
 
     .card p {
-      color: #9c9498;
-      line-height: 1.7;
-      font-size: 0.95rem;
-      font-weight: 300;
+      color: var(--text-muted);
+      line-height: 1.8;
+      font-size: 0.9rem;
+      font-weight: 200;
     }
 
     /* Footer */
     footer {
       text-align: center;
-      padding: 3rem 0;
-      color: #6b6367;
-      font-size: 0.8rem;
-      letter-spacing: 2px;
-      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      padding: 4rem 0;
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      letter-spacing: 3px;
+      border-top: 1px solid var(--border-color);
+      text-transform: uppercase;
     }
 
     @media (max-width: 768px) {
-      .hero h1 { font-size: 2.5rem; }
+      .hero h1 { font-size: 2.8rem; letter-spacing: 4px; }
       .nav-links { display: none; }
     }
   </style>
@@ -226,6 +281,7 @@
   <!-- Background 3D Canvas -->
   <canvas id="webgl-canvas"></canvas>
 
-  <div class="content">
-    <nav>
-      <!-- Logo Embedded Directly via Base64 -->
+  <div class="site-wrapper">
+    <header>
+      <a href="#">
+        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAYAAACtWK6CAAAACXBIWXMAAAsTAAALEwEAmpwYAAAgAElEQVR4nOycd3xc1ZXuv33ulWjVruSSXRk3LneMcU0wxsEwYFsYCASTgYQQCAmEBAgJCYQkkISWEEooAZhgcNfdNba70mp1zfd+f1zv2bJky/Lq9+u5d/aed95z79l7r732vu+c6+K0f09W54r343j/K96N4zqv+H0vXjPv+vHge/vjPv+vHv++r/2//Wvvn8v9vbt/vv7v/v7f/r//e7b/v3v3b179u//97//v9n7c9v6Ov3v/t7v9r//vfXv73v//3//t/v//739bvv//fvf+v3b3v/vv3n/v8f3uvvPtvv9eOvnfrvv7v/v7f7P///u///d9/7v7b/v3v9v/u//t/7f7//7b/7f9v/79b3/u9f//bvfvrvb73f3/vfv3t//v//f7v7739b9//v//f3r//7v///u9f9bvdvfv8v//f////9n9+v9f//r//vvv7b37v8O9P//f3vu9b/+uunb3v7b/e79b9v9f//7v79b//7v//7v7+79f3//vv9vfv3//v//v37f/v///9v9b7//t/v/b7//99v/u//t/v//v73v9vvv9eO9r7v3u7/+vvu7/+3v9v9r//v//f3v9v9v///t/r8vvrv7//v9b7//vv//bvf/b2v//77vf//uvv9r//v//3v//7vr7r83u7//7v//7v7v3v//v3vv7vv6vv7r//uvv9v//r7vv9e/9r9f/b//9v9v/v3v7fvve/+9vf9v/v//v37vrvf+v3v/v7v3v9b//7v7v7b3vvvv9v9v/vv7vf//7v7v7b9//u9v///t/r/+v7r9b//vvv//u//7v//vv3vv7vvv//r//7v/v/v/f//7v7vrff7//v9vvv9v9v//vv//f//7v7v79v//v//v3v//vv//v7v7/v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7/v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7/v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7/v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7/v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7/v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7/v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7/v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7/v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7/v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7/v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7/v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7/v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7/v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7/v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7/v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7/v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7/v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//vv7fvv//r//v7vvv9b7v7v//t//v9v7v7v
