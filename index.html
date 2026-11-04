@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VELORA | Next-Gen Brand</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: #0d0d11;
+      color: #ffffff;
+      overflow-x: hidden;
+    }
+
+    /* 3D Canvas Background */
+    #webgl-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    /* Content Overlay */
+    .content {
+      position: relative;
+      z-index: 2;
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 2rem 5%;
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 700;
+      letter-spacing: 4px;
+      background: linear-gradient(45deg, #a855f7, #6366f1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: #a1a1aa;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover {
+      color: #ffffff;
+    }
+
+    /* Hero Section */
+    .hero {
+      height: 80vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 0 1rem;
+    }
+
+    .hero h1 {
+      font-size: 4rem;
+      letter-spacing: 6px;
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+      background: linear-gradient(180deg, #ffffff, #71717a);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      color: #a1a1aa;
+      max-width: 600px;
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+
+    .btn {
+      padding: 0.8rem 2rem;
+      border: none;
+      border-radius: 30px;
+      background: linear-gradient(45deg, #a855f7, #6366f1);
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(168, 85, 247, 0.4);
+    }
+
+    /* Feature Cards */
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      padding: 5rem 5%;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      padding: 2.5rem;
+      border-radius: 16px;
+      transition: transform 0.3s, border-color 0.3s;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(168, 85, 247, 0.5);
+    }
+
+    .card h3 {
+      font-size: 1.4rem;
+      margin-bottom: 1rem;
+      color: #a855f7;
+    }
+
+    .card p {
+      color: #a1a1aa;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Background 3D Canvas -->
+  <canvas id="webgl-canvas"></canvas>
+
+  <!-- Website Content -->
+  <div class="content">
+    <nav>
+      <div class="logo">VELORA</div>
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#products">Products</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+
+    <section class="hero">
+      <h1>The Future of Elegance</h1>
+      <p>Velora combines cutting-edge design with premium craftsmanship to create modern luxury tailored for tomorrow.</p>
+      <button class="btn">Explore Collection</button>
+    </section>
+
+    <section class="features">
+      <div class="card">
+        <h3>Innovated Design</h3>
+        <p>Engineered with precision, blending minimalism and modern aesthetics seamlessly.</p>
+      </div>
+      <div class="card">
+        <h3>Premium Materials</h3>
+        <p>Crafted exclusively from high-grade, sustainable components built to last.</p>
+      </div>
+      <div class="card">
+        <h3>Global Reach</h3>
+        <p>Delivering luxury experiences worldwide with seamless customer service.</p>
+      </div>
+    </section>
+  </div>
+
+  <!-- Three.js Library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+  <script>
+    // 1. Scene Setup
+    const canvas = document.querySelector('#webgl-canvas');
+    const scene = new THREE.Scene();
+
+    const camera = new THREE.PerspectiveCamera(
+      75,
+      window.innerWidth / window.innerHeight,
+      0.1,
+      1000
+    );
+    camera.position.z = 5;
+
+    const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+    // 2. Add 3D Objects
+    const geometry = new THREE.IcosahedronGeometry(1.8, 1);
+    const material = new THREE.MeshStandardMaterial({
+      color: 0xa855f7,
+      wireframe: true,
+      roughness: 0.3,
+      metalness: 0.8
+    });
+
+    const mainObject = new THREE.Mesh(geometry, material);
+    scene.add(mainObject);
+
+    // Floating background particles
+    const particlesGeometry = new THREE.BufferGeometry();
+    const particlesCount = 200;
+    const posArray = new Float32Array(particlesCount * 3);
+
+    for (let i = 0; i < particlesCount * 3; i++) {
+      posArray[i] = (Math.random() - 0.5) * 15;
+    }
+
+    particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+    const particlesMaterial = new THREE.PointsMaterial({
+      size: 0.03,
+      color: 0x6366f1,
+      transparent: true,
+      opacity: 0.8
+    });
+    const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+    scene.add(particlesMesh);
+
+    // 3. Lighting
+    const pointLight = new THREE.PointLight(0xffffff, 1);
+    pointLight.position.set(5, 5, 5);
+    scene.add(pointLight);
+
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
+    scene.add(ambientLight);
+
+    // 4. Mouse Movement Interaction
+    let mouseX = 0;
+    let mouseY = 0;
+
+    window.addEventListener('mousemove', (event) => {
+      mouseX = (event.clientX / window.innerWidth - 0.5) * 2;
+      mouseY = -(event.clientY / window.innerHeight - 0.5) * 2;
+    });
+
+    // 5. Animation Loop
+    const clock = new THREE.Clock();
+
+    function animate() {
+      const elapsedTime = clock.getElapsedTime();
+
+      // Rotate central 3D mesh
+      mainObject.rotation.x = elapsedTime * 0.3;
+      mainObject.rotation.y = elapsedTime * 0.4;
+
+      // Parallax effect following mouse
+      mainObject.position.x += (mouseX * 0.5 - mainObject.position.x) * 0.05;
+      mainObject.position.y += (mouseY * 0.5 - mainObject.position.y) * 0.05;
+
+      particlesMesh.rotation.y = elapsedTime * -0.05;
+
+      renderer.render(scene, camera);
+      requestAnimationFrame(animate);
+    }
+    animate();
+
+    // 6. Responsive Resize Handling
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+  </script>
+</body>
+</html>
