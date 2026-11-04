@@ -3,17 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>VELORA | Next-Gen Brand</title>
+  <title>VELORA FASHION | Modern Womenswear</title>
   <style>
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-family: 'Didot', 'Playfair Display', 'Cinzel', 'Georgia', serif;
     }
 
     body {
-      background-color: #0d0d11;
+      background-color: #0b0a0d;
       color: #ffffff;
       overflow-x: hidden;
     }
@@ -39,112 +39,142 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 2rem 5%;
+      padding: 2.5rem 8%;
     }
 
     .logo {
       font-size: 1.8rem;
       font-weight: 700;
-      letter-spacing: 4px;
-      background: linear-gradient(45deg, #a855f7, #6366f1);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      letter-spacing: 6px;
+      color: #f2c4ce;
+      text-transform: uppercase;
+    }
+
+    .logo span {
+      font-size: 1.1rem;
+      font-weight: 300;
+      letter-spacing: 3px;
+      color: #e2a8b5;
     }
 
     .nav-links {
       display: flex;
-      gap: 2rem;
+      gap: 2.5rem;
       list-style: none;
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.9rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
     }
 
     .nav-links a {
-      color: #a1a1aa;
+      color: #d1d1d6;
       text-decoration: none;
       transition: color 0.3s;
     }
 
     .nav-links a:hover {
-      color: #ffffff;
+      color: #f2c4ce;
     }
 
     /* Hero Section */
     .hero {
-      height: 80vh;
+      height: 85vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       text-align: center;
-      padding: 0 1rem;
+      padding: 0 1.5rem;
     }
 
     .hero h1 {
-      font-size: 4rem;
-      letter-spacing: 6px;
+      font-size: 4.5rem;
+      letter-spacing: 8px;
       margin-bottom: 1rem;
       text-transform: uppercase;
-      background: linear-gradient(180deg, #ffffff, #71717a);
+      font-weight: 400;
+      background: linear-gradient(180deg, #ffffff, #f2c4ce);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
 
     .hero p {
-      font-size: 1.2rem;
-      color: #a1a1aa;
-      max-width: 600px;
-      margin-bottom: 2rem;
-      line-height: 1.6;
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 1.1rem;
+      color: #b5b3bc;
+      max-width: 550px;
+      margin-bottom: 2.5rem;
+      line-height: 1.8;
+      letter-spacing: 1px;
     }
 
     .btn {
-      padding: 0.8rem 2rem;
-      border: none;
-      border-radius: 30px;
-      background: linear-gradient(45deg, #a855f7, #6366f1);
-      color: white;
-      font-weight: 600;
+      padding: 1rem 2.8rem;
+      border: 1px solid #f2c4ce;
+      border-radius: 40px;
+      background: rgba(242, 196, 206, 0.1);
+      color: #ffffff;
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.85rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
       cursor: pointer;
-      transition: transform 0.2s, box-shadow 0.2s;
+      backdrop-filter: blur(5px);
+      transition: all 0.3s ease;
     }
 
     .btn:hover {
+      background: #f2c4ce;
+      color: #0b0a0d;
+      box-shadow: 0 10px 30px rgba(242, 196, 206, 0.3);
       transform: translateY(-2px);
-      box-shadow: 0 10px 25px rgba(168, 85, 247, 0.4);
     }
 
-    /* Feature Cards */
-    .features {
+    /* Category Cards Section */
+    .collections {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 2rem;
-      padding: 5rem 5%;
-      max-width: 1200px;
+      padding: 5rem 8%;
+      max-width: 1300px;
       margin: 0 auto;
     }
 
     .card {
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(10px);
-      padding: 2.5rem;
-      border-radius: 16px;
-      transition: transform 0.3s, border-color 0.3s;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(242, 196, 206, 0.15);
+      backdrop-filter: blur(12px);
+      padding: 3rem 2rem;
+      border-radius: 8px;
+      text-align: center;
+      transition: all 0.4s ease;
     }
 
     .card:hover {
-      transform: translateY(-5px);
-      border-color: rgba(168, 85, 247, 0.5);
+      transform: translateY(-8px);
+      border-color: rgba(242, 196, 206, 0.5);
+      background: rgba(242, 196, 206, 0.05);
     }
 
     .card h3 {
-      font-size: 1.4rem;
+      font-size: 1.5rem;
+      letter-spacing: 3px;
       margin-bottom: 1rem;
-      color: #a855f7;
+      color: #f2c4ce;
+      font-weight: 400;
     }
 
     .card p {
-      color: #a1a1aa;
-      line-height: 1.5;
+      font-family: 'Segoe UI', sans-serif;
+      color: #9d99a5;
+      line-height: 1.6;
+      font-size: 0.95rem;
+    }
+
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 2.8rem; }
+      .nav-links { display: none; }
     }
   </style>
 </head>
@@ -153,35 +183,36 @@
   <!-- Background 3D Canvas -->
   <canvas id="webgl-canvas"></canvas>
 
-  <!-- Website Content -->
+  <!-- Content -->
   <div class="content">
     <nav>
-      <div class="logo">VELORA</div>
+      <div class="logo">VELORA <span>FASHION</span></div>
       <ul class="nav-links">
+        <li><a href="#couture">Couture</a></li>
+        <li><a href="#pret">Ready to Wear</a></li>
         <li><a href="#about">About</a></li>
-        <li><a href="#products">Products</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
     </nav>
 
     <section class="hero">
-      <h1>The Future of Elegance</h1>
-      <p>Velora combines cutting-edge design with premium craftsmanship to create modern luxury tailored for tomorrow.</p>
-      <button class="btn">Explore Collection</button>
+      <h1>Elegance Defined</h1>
+      <p>Discover sophisticated womenswear crafted for timeless style, flawless silhouettes, and effortless luxury.</p>
+      <button class="btn">View New Arrivals</button>
     </section>
 
-    <section class="features">
+    <section class="collections">
       <div class="card">
-        <h3>Innovated Design</h3>
-        <p>Engineered with precision, blending minimalism and modern aesthetics seamlessly.</p>
+        <h3>Haute Couture</h3>
+        <p>Bespoke evening gowns and tailored statement pieces designed with refined craftsmanship.</p>
       </div>
       <div class="card">
-        <h3>Premium Materials</h3>
-        <p>Crafted exclusively from high-grade, sustainable components built to last.</p>
+        <h3>Ready-To-Wear</h3>
+        <p>Chic daily essentials designed for modern, confident women on the go.</p>
       </div>
       <div class="card">
-        <h3>Global Reach</h3>
-        <p>Delivering luxury experiences worldwide with seamless customer service.</p>
+        <h3>Luxury Accessories</h3>
+        <p>Hand-curated silk scarves, statement accents, and signature finishing touches.</p>
       </div>
     </section>
   </div>
@@ -206,46 +237,46 @@
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-    // 2. Add 3D Objects
-    const geometry = new THREE.IcosahedronGeometry(1.8, 1);
+    // 2. 3D Elegant Gem / Diamond Geometry (High Fashion Vibe)
+    const geometry = new THREE.OctahedronGeometry(1.6, 2);
     const material = new THREE.MeshStandardMaterial({
-      color: 0xa855f7,
+      color: 0xf2c4ce,
       wireframe: true,
-      roughness: 0.3,
-      metalness: 0.8
+      roughness: 0.1,
+      metalness: 0.9
     });
 
-    const mainObject = new THREE.Mesh(geometry, material);
-    scene.add(mainObject);
+    const fashionGem = new THREE.Mesh(geometry, material);
+    scene.add(fashionGem);
 
-    // Floating background particles
+    // Subtle ambient glitter floating particles
     const particlesGeometry = new THREE.BufferGeometry();
-    const particlesCount = 200;
+    const particlesCount = 250;
     const posArray = new Float32Array(particlesCount * 3);
 
     for (let i = 0; i < particlesCount * 3; i++) {
-      posArray[i] = (Math.random() - 0.5) * 15;
+      posArray[i] = (Math.random() - 0.5) * 14;
     }
 
     particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
     const particlesMaterial = new THREE.PointsMaterial({
-      size: 0.03,
-      color: 0x6366f1,
+      size: 0.025,
+      color: 0xf2c4ce,
       transparent: true,
-      opacity: 0.8
+      opacity: 0.7
     });
     const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
     scene.add(particlesMesh);
 
-    // 3. Lighting
-    const pointLight = new THREE.PointLight(0xffffff, 1);
-    pointLight.position.set(5, 5, 5);
+    // 3. Warm Studio Lighting
+    const pointLight = new THREE.PointLight(0xfff0f5, 1.2);
+    pointLight.position.set(4, 4, 4);
     scene.add(pointLight);
 
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
     scene.add(ambientLight);
 
-    // 4. Mouse Movement Interaction
+    // 4. Mouse Interaction (Parallax)
     let mouseX = 0;
     let mouseY = 0;
 
@@ -260,22 +291,22 @@
     function animate() {
       const elapsedTime = clock.getElapsedTime();
 
-      // Rotate central 3D mesh
-      mainObject.rotation.x = elapsedTime * 0.3;
-      mainObject.rotation.y = elapsedTime * 0.4;
+      // Slow elegant rotation
+      fashionGem.rotation.x = elapsedTime * 0.2;
+      fashionGem.rotation.y = elapsedTime * 0.25;
 
-      // Parallax effect following mouse
-      mainObject.position.x += (mouseX * 0.5 - mainObject.position.x) * 0.05;
-      mainObject.position.y += (mouseY * 0.5 - mainObject.position.y) * 0.05;
+      // Parallax drift following cursor
+      fashionGem.position.x += (mouseX * 0.4 - fashionGem.position.x) * 0.05;
+      fashionGem.position.y += (mouseY * 0.4 - fashionGem.position.y) * 0.05;
 
-      particlesMesh.rotation.y = elapsedTime * -0.05;
+      particlesMesh.rotation.y = elapsedTime * 0.03;
 
       renderer.render(scene, camera);
       requestAnimationFrame(animate);
     }
     animate();
 
-    // 6. Responsive Resize Handling
+    // 6. Responsive Resize
     window.addEventListener('resize', () => {
       camera.aspect = window.innerWidth / window.innerHeight;
       camera.updateProjectionMatrix();
