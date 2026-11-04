@@ -1,287 +1,622 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>VELORA FASHION | Luxury Womenswear</title>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Montserrat:wght@200;300;400;500&display=swap');
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VELORA FASHION | Elegance in Every Thread</title>
 
-    :root {
-      --bg-color: #0c0b0e;
-      --card-bg: rgba(255, 255, 255, 0.02);
-      --border-color: rgba(235, 185, 195, 0.15);
-      --accent-pink: #ebb3c3;
-      --text-main: #f9f6f8;
-      --text-muted: #9e979f;
-    }
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      scroll-behavior: smooth;
-    }
+<style>
+* {
+ margin:0;
+ padding:0;
+ box-sizing:border-box;
+}
 
-    body {
-      background-color: var(--bg-color);
-      color: var(--text-main);
-      font-family: 'Montserrat', sans-serif;
-      overflow-x: hidden;
-    }
+:root {
+ --navy:#042C3B;
+ --gold:#F8C030;
+ --cream:#F8F5EF;
+ --white:#fff;
+}
 
-    /* 3D Background Canvas */
-    #webgl-canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      z-index: 1;
-      pointer-events: none;
-    }
+html { scroll-behavior:smooth; }
 
-    /* Wrapper */
-    .site-wrapper {
-      position: relative;
-      z-index: 2;
-    }
+body {
+ background:var(--cream);
+ color:var(--navy);
+ font-family:'Poppins',sans-serif;
+ overflow-x:hidden;
+}
 
-    /* Header & Navigation */
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 2rem 5%;
-      background: rgba(12, 11, 14, 0.75);
-      backdrop-filter: blur(20px);
-      border-bottom: 1px solid var(--border-color);
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
+header {
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+ padding:18px 7%;
+ background:rgba(248,245,239,.96);
+ position:sticky;
+ top:0;
+ z-index:100;
+ box-shadow:0 4px 25px #042c3b12;
+}
 
-    .brand-logo {
-      height: 50px;
-      width: auto;
-      object-fit: contain;
-      filter: drop-shadow(0 2px 8px rgba(235, 185, 195, 0.3));
-    }
+.logo {
+ display:flex;
+ align-items:center;
+ gap:10px;
+ font-family:'Playfair Display',serif;
+ font-size:27px;
+ font-weight:bold;
+ letter-spacing:3px;
+}
 
-    .nav-links {
-      display: flex;
-      gap: 3rem;
-      list-style: none;
-      font-size: 0.75rem;
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      font-weight: 300;
-    }
+.logo img {
+ width:48px;
+ height:48px;
+ object-fit:contain;
+}
 
-    .nav-links a {
-      color: var(--text-main);
-      text-decoration: none;
-      transition: color 0.3s ease;
-      position: relative;
-    }
+nav {
+ display:flex;
+ gap:35px;
+}
 
-    .nav-links a::after {
-      content: '';
-      position: absolute;
-      width: 0;
-      height: 1px;
-      bottom: -4px;
-      left: 0;
-      background-color: var(--accent-pink);
-      transition: width 0.3s ease;
-    }
+nav a {
+ text-decoration:none;
+ color:var(--navy);
+ font-size:13px;
+ letter-spacing:1px;
+ transition:.3s;
+}
 
-    .nav-links a:hover {
-      color: var(--accent-pink);
-    }
+nav a:hover { color:#C28A16; }
 
-    .nav-links a:hover::after {
-      width: 100%;
-    }
+.menu {
+ display:none;
+ font-size:27px;
+ cursor:pointer;
+}
 
-    /* Hero Section */
-    .hero {
-      min-height: 85vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      padding: 4rem 1.5rem;
-    }
+.hero {
+ min-height:680px;
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ align-items:center;
+ padding:65px 9%;
+ gap:35px;
+ background:
+ radial-gradient(circle at 85% 50%,#e6d5bd 0%,transparent 42%),
+ linear-gradient(120deg,#f8f5ef,#eee5d8);
+ perspective:1200px;
+}
 
-    .hero-emblem {
-      max-width: 240px;
-      width: 100%;
-      height: auto;
-      margin-bottom: 2rem;
-      filter: drop-shadow(0 6px 16px rgba(235, 185, 195, 0.25));
-      animation: gentleFloat 5s ease-in-out infinite;
-    }
+.hero-content {
+ animation:slideIn 1s ease;
+}
 
-    @keyframes gentleFloat {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
-    }
+.tag {
+ color:#A17B35;
+ letter-spacing:5px;
+ font-size:12px;
+ margin-bottom:25px;
+}
 
-    .hero h1 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 4.2rem;
-      font-weight: 300;
-      letter-spacing: 8px;
-      margin-bottom: 1.2rem;
-      color: #ffffff;
-      text-transform: uppercase;
-    }
+.hero h1 {
+ font-family:'Playfair Display',serif;
+ font-size:clamp(48px,6vw,78px);
+ line-height:1.12;
+ font-weight:500;
+ margin-bottom:25px;
+}
 
-    .hero h1 span {
-      color: var(--accent-pink);
-      font-style: italic;
-    }
+.hero h1 span { color:#B88A35; }
 
-    .hero p {
-      font-size: 1rem;
-      color: var(--text-muted);
-      max-width: 580px;
-      margin-bottom: 3rem;
-      line-height: 1.9;
-      font-weight: 200;
-      letter-spacing: 1.5px;
-    }
+.hero p {
+ color:#68747A;
+ font-size:14px;
+ line-height:2;
+ max-width:440px;
+ margin-bottom:35px;
+}
 
-    .cta-btn {
-      padding: 1.1rem 3.2rem;
-      border: 1px solid var(--accent-pink);
-      border-radius: 50px;
-      background: rgba(235, 185, 195, 0.05);
-      color: var(--text-main);
-      font-size: 0.75rem;
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      cursor: pointer;
-      backdrop-filter: blur(10px);
-      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-      text-decoration: none;
-    }
+.btn {
+ display:inline-block;
+ padding:15px 32px;
+ background:var(--navy);
+ color:white;
+ text-decoration:none;
+ font-size:12px;
+ letter-spacing:2px;
+ border:1px solid var(--navy);
+ transition:.4s;
+}
 
-    .cta-btn:hover {
-      background: var(--accent-pink);
-      color: var(--bg-color);
-      box-shadow: 0 12px 35px rgba(235, 185, 195, 0.3);
-      transform: translateY(-3px);
-    }
+.btn:hover {
+ background:var(--gold);
+ color:var(--navy);
+ transform:translateY(-5px);
+ box-shadow:0 12px 25px #042c3b30;
+}
 
-    /* Collections Section */
-    .collections-container {
-      max-width: 1300px;
-      margin: 0 auto;
-      padding: 6rem 5%;
-    }
+.hero-visual {
+ height:490px;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ perspective:1000px;
+}
 
-    .section-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 2.5rem;
-      text-align: center;
-      letter-spacing: 5px;
-      margin-bottom: 4rem;
-      font-weight: 300;
-      text-transform: uppercase;
-      color: var(--text-main);
-    }
+.image-frame {
+ width:75%;
+ height:440px;
+ position:relative;
+ transform:rotateY(-10deg) rotateX(3deg);
+ transform-style:preserve-3d;
+ transition:.7s;
+ box-shadow:25px 25px 0 #d9c6a9,
+ 35px 35px 50px #042c3b30;
+}
 
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 2.5rem;
-    }
+.image-frame:hover {
+ transform:rotateY(0deg) rotateX(0deg) translateY(-10px);
+}
 
-    .card {
-      background: var(--card-bg);
-      border: 1px solid var(--border-color);
-      backdrop-filter: blur(15px);
-      padding: 3.5rem 2.5rem;
-      border-radius: 12px;
-      text-align: left;
-      transition: all 0.4s ease;
-      position: relative;
-      overflow: hidden;
-    }
+.image-frame img {
+ width:100%;
+ height:100%;
+ object-fit:cover;
+}
 
-    .card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 2px;
-      background: linear-gradient(90deg, transparent, var(--accent-pink), transparent);
-      opacity: 0;
-      transition: opacity 0.4s ease;
-    }
+.floating {
+ position:absolute;
+ right:-35px;
+ bottom:35px;
+ background:var(--navy);
+ color:white;
+ padding:20px 24px;
+ transform:translateZ(65px);
+ box-shadow:0 10px 25px #0003;
+ font-family:'Playfair Display',serif;
+ font-size:18px;
+}
 
-    .card:hover {
-      transform: translateY(-8px);
-      border-color: rgba(235, 185, 195, 0.4);
-      background: rgba(235, 185, 195, 0.03);
-      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6);
-    }
+.section {
+ padding:90px 8%;
+ text-align:center;
+}
 
-    .card:hover::before {
-      opacity: 1;
-    }
+.section-label {
+ color:#B58A37;
+ font-size:11px;
+ letter-spacing:5px;
+ margin-bottom:15px;
+}
 
-    .card span {
-      font-size: 0.7rem;
-      letter-spacing: 3px;
-      color: var(--accent-pink);
-      text-transform: uppercase;
-      display: block;
-      margin-bottom: 1rem;
-    }
+.section h2 {
+ font-family:'Playfair Display',serif;
+ font-size:43px;
+ font-weight:500;
+ margin-bottom:15px;
+}
 
-    .card h3 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.8rem;
-      letter-spacing: 2px;
-      margin-bottom: 1rem;
-      font-weight: 400;
-    }
+.subtitle {
+ color:#788184;
+ font-size:13px;
+ margin-bottom:50px;
+}
 
-    .card p {
-      color: var(--text-muted);
-      line-height: 1.8;
-      font-size: 0.9rem;
-      font-weight: 200;
-    }
+.categories {
+ display:grid;
+ grid-template-columns:repeat(3,1fr);
+ gap:30px;
+ perspective:1200px;
+}
 
-    /* Footer */
-    footer {
-      text-align: center;
-      padding: 4rem 0;
-      color: var(--text-muted);
-      font-size: 0.75rem;
-      letter-spacing: 3px;
-      border-top: 1px solid var(--border-color);
-      text-transform: uppercase;
-    }
+.category {
+ height:410px;
+ position:relative;
+ overflow:hidden;
+ text-align:left;
+ transform-style:preserve-3d;
+ transition:.5s;
+ box-shadow:0 15px 35px #042c3b15;
+}
 
-    @media (max-width: 768px) {
-      .hero h1 { font-size: 2.8rem; letter-spacing: 4px; }
-      .nav-links { display: none; }
-    }
-  </style>
+.category:hover {
+ transform:rotateY(-5deg) rotateX(4deg) translateY(-12px);
+ box-shadow:15px 25px 45px #042c3b35;
+}
+
+.category img {
+ width:100%;
+ height:100%;
+ object-fit:cover;
+ transition:.8s;
+}
+
+.category:hover img { transform:scale(1.1); }
+
+.category-info {
+ position:absolute;
+ bottom:0;
+ left:0;
+ width:100%;
+ padding:35px 25px;
+ color:white;
+ background:linear-gradient(transparent,#000c);
+}
+
+.category-info h3 {
+ font-family:'Playfair Display',serif;
+ font-size:28px;
+ margin-bottom:10px;
+}
+
+.category-info a {
+ color:var(--gold);
+ text-decoration:none;
+ font-size:12px;
+ letter-spacing:2px;
+}
+
+.collection {
+ background:var(--navy);
+ color:white;
+}
+
+.collection .subtitle { color:#c3cdd0; }
+
+.products {
+ display:grid;
+ grid-template-columns:repeat(3,1fr);
+ gap:30px;
+ perspective:1200px;
+}
+
+.product {
+ background:white;
+ color:var(--navy);
+ padding-bottom:22px;
+ transition:.5s;
+ transform-style:preserve-3d;
+}
+
+.product:hover {
+ transform:translateY(-12px) rotateX(3deg);
+ box-shadow:0 20px 35px #0005;
+}
+
+.product img {
+ width:100%;
+ height:350px;
+ object-fit:cover;
+ transition:.5s;
+}
+
+.product:hover img { transform:scale(.97); }
+
+.product h3 {
+ font-family:'Playfair Display',serif;
+ font-size:21px;
+ margin:17px 0 7px;
+}
+
+.product p {
+ font-size:13px;
+ color:#B58A37;
+}
+
+.shop-link {
+ display:inline-block;
+ margin-top:40px;
+ color:var(--gold);
+ text-decoration:none;
+ letter-spacing:2px;
+ border-bottom:1px solid var(--gold);
+ padding-bottom:7px;
+}
+
+.about {
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ align-items:center;
+ gap:65px;
+ text-align:left;
+}
+
+.about img {
+ width:100%;
+ height:450px;
+ object-fit:cover;
+ box-shadow:20px 20px 0 #e1d1b6;
+}
+
+.about h2 { margin-bottom:25px; }
+
+.about p {
+ color:#66747A;
+ line-height:2;
+ font-size:14px;
+ margin-bottom:25px;
+}
+
+.banner {
+ padding:85px 20px;
+ text-align:center;
+ background:linear-gradient(120deg,#d9c8ac,#f7f0e4);
+}
+
+.banner h2 {
+ font-family:'Playfair Display',serif;
+ font-size:clamp(35px,5vw,52px);
+ margin-bottom:20px;
+}
+
+.banner p {
+ color:#56636A;
+ margin-bottom:30px;
+}
+
+footer {
+ background:#031F2A;
+ color:white;
+ padding:55px 8% 25px;
+ text-align:center;
+}
+
+footer h2 {
+ font-family:'Playfair Display',serif;
+ letter-spacing:4px;
+ margin-bottom:15px;
+}
+
+footer p {
+ color:#bdc9cc;
+ font-size:12px;
+ line-height:2;
+}
+
+.footer-links {
+ margin:25px 0;
+}
+
+.footer-links a {
+ color:var(--gold);
+ text-decoration:none;
+ margin:0 12px;
+ font-size:12px;
+}
+
+.copyright {
+ border-top:1px solid #ffffff25;
+ padding-top:20px;
+ margin-top:25px;
+}
+
+.reveal {
+ opacity:0;
+ transform:translateY(45px);
+ transition:1s;
+}
+
+.reveal.show {
+ opacity:1;
+ transform:translateY(0);
+}
+
+@keyframes slideIn {
+ from { opacity:0; transform:translateX(-50px); }
+ to { opacity:1; transform:translateX(0); }
+}
+
+@media(max-width:800px) {
+ header { padding:15px 5%; }
+ .menu { display:block; }
+ nav {
+  display:none;
+  position:absolute;
+  top:75px;
+  left:0;
+  width:100%;
+  padding:25px;
+  background:var(--cream);
+  flex-direction:column;
+  text-align:center;
+  gap:25px;
+ }
+ nav.active { display:flex; }
+ .hero {
+  grid-template-columns:1fr;
+  text-align:center;
+  padding:65px 7%;
+ }
+ .hero p { margin:0 auto 30px; }
+ .hero-visual { height:400px; }
+ .image-frame { height:350px; }
+ .categories,.products { grid-template-columns:1fr; }
+ .category { height:420px; }
+ .product img { height:400px; }
+ .about { grid-template-columns:1fr; }
+ .about img { height:350px; }
+ .section { padding:65px 7%; }
+ .section h2 { font-size:35px; }
+}
+</style>
 </head>
+
 <body>
 
-  <!-- Background 3D Canvas -->
-  <canvas id="webgl-canvas"></canvas>
+<header>
+ <div class="logo">
+  <img src="assets/velora-logo.png" alt="Velora Logo"
+       onerror="this.style.display='none'">
+  VELORA
+ </div>
 
-  <div class="site-wrapper">
-    <header>
-      <a href="#">
-        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAYAAACtWK6CAAAACXBIWXMAAAsTAAALEwEAmpwYAAAgAElEQVR4nOycd3xc1ZXuv33ulWjVruSSXRk3LneMcU0wxsEwYFsYCASTgYQQCAmEBAgJCYQkkISWEEooAZhgcNfdNba70mp1zfd+f1zv2bJky/Lq9+u5d/aed95z79l7r732vu+c6+K0f09W54r343j/K96N4zqv+H0vXjPv+vHge/vjPv+vHv++r/2//Wvvn8v9vbt/vv7v/v7f/r//e7b/v3v3b179u//97//v9n7c9v6Ov3v/t7v9r//vfXv73v//3//t/v//739bvv//fvf+v3b3v/vv3n/v8f3uvvPtvv9eOvnfrvv7v/v7f7P///u///d9/7v7b/v3v9v/u//t/7f7//7b/7f9v/79b3/u9f//bvfvrvb73f3/vfv3t//v//f7v7739b9//v//f3r//7v///u9f9bvdvfv8v//f////9n9+v9f//r//vvv7b37v8O9P//f3vu9b/+uunb3v7b/e79b9v9f//7v79b//7v//7v7+79f3//vv9vfv3//v//v37f/v///9v9b7//t/v/b7//99v/u//t/v//v73v9vvv9eO9r7v3u7/+vvu7/+3v9v9r//v//f3v9v9v///t/r8vvrv7//v9b7//vv//bvf/b2v//77vf//uvv9r//v//3v//7vr7r83u7//7v//7v7v3v//v3vv7vv6vv7r//uvv9v//r7vv9e/9r9f/b//9v9v/v3v7fvve/+9vf9v/v//v37vrvf+v3v/v7v3v9b//7v7v7b3vvvv9v9v/vv7vf//7v7v7b9//u9v///t/r/+v7r9b//vvv//u//7v//vv3vv7vvv//r//7v/v/v/f//7v7vrff7//v9vvv9v9v//vv//f//7v7v79v//v//v3v//vv//v7v7/v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7/v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7/v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7/v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7/v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7/v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7/v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7/v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7/v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7/v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7/v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7/v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7/v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7/v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7/v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7/v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7/v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7/v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//v9vvv9v9v//vv//f//7v7v9v//v//v3v//vv//v7v7v//v9r//v//v9v//7f//v9v/7v7v7v9//t/v//73v9vvv7b3v7fvv//r//v7vvv9b7v7v//t//v9v7v7v9b7v7v//v//t7f//vv7fvv//r//v7vvv9b7v7v//t//v9v7v7v
+ <div class="menu" onclick="toggleMenu()">☰</div>
+
+ <nav id="navigation">
+  <a href="index.html">HOME</a>
+  <a href="shop.html">SHOP</a>
+  <a href="about.html">ABOUT</a>
+  <a href="contact.html">CONTACT</a>
+ </nav>
+</header>
+
+<section class="hero">
+ <div class="hero-content">
+  <div class="tag">THE ART OF ELEGANCE</div>
+
+  <h1>Style is a way<br>to <span>express</span><br>yourself.</h1>
+
+  <p>
+   Discover a world of timeless elegance and modern fashion.
+   Explore carefully selected styles designed to make every
+   moment special.
+  </p>
+
+  <a href="shop.html" class="btn">EXPLORE COLLECTION</a>
+ </div>
+
+ <div class="hero-visual">
+  <div class="image-frame">
+   <img src="https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=900"
+        alt="Luxury fashion collection">
+   <div class="floating">Elegance, Redefined.</div>
+  </div>
+ </div>
+</section>
+
+<section class="section reveal">
+ <div class="section-label">DISCOVER VELORA</div>
+ <h2>Explore Our World</h2>
+ <p class="subtitle">Fashion that speaks without saying a word.</p>
+
+ <div class="categories">
+
+  <div class="category">
+   <img src="https://images.unsplash.com/photo-1539008835657-9e8e9680c956?w=800" alt="Evening wear">
+   <div class="category-info">
+    <h3>Evening Wear</h3>
+    <a href="shop.html">DISCOVER MORE →</a>
+   </div>
+  </div>
+
+  <div class="category">
+   <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?w=800" alt="Modern classics">
+   <div class="category-info">
+    <h3>Modern Classics</h3>
+    <a href="shop.html">DISCOVER MORE →</a>
+   </div>
+  </div>
+
+  <div class="category">
+   <img src="https://images.unsplash.com/photo-1485230895905-ec40ba36b9bc?w=800" alt="Casual luxury">
+   <div class="category-info">
+    <h3>Casual Luxury</h3>
+    <a href="shop.html">DISCOVER MORE →</a>
+   </div>
+  </div>
+
+ </div>
+</section>
+
+<section class="section collection reveal">
+ <div class="section-label">CURATED FOR YOU</div>
+ <h2>Featured Collection</h2>
+ <p class="subtitle">Find your signature style with Velora.</p>
+
+ <div class="products">
+
+  <div class="product">
+   <img src="https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=800" alt="Elegant dress">
+   <h3>Elegant Dresses</h3>
+   <p>TIMELESS BEAUTY</p>
+  </div>
+
+  <div class="product">
+   <img src="https://images.unsplash.com/photo-1551163943-3f6a855d1153?w=800" alt="Fashion outfit">
+   <h3>Chic Western Wear</h3>
+   <p>MODERN STYLE</p>
+  </div>
+
+  <div class="product">
+   <img src="https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=800" alt="Traditional outfit">
+   <h3>Elegant Kurtis</h3>
+   <p>EVERYDAY ELEGANCE</p>
+  </div>
+
+ </div>
+
+ <a href="shop.html" class="shop-link">VIEW ALL COLLECTIONS →</a>
+</section>
+
+<section class="section about reveal">
+ <div>
+  <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=900" alt="Velora fashion">
+ </div>
+
+ <div>
+  <div class="section-label">OUR STORY</div>
+  <h2>Fashion With A Purpose</h2>
+  <p>
+   Welcome to Velora Fashion, where elegance meets individuality.
+   We believe fashion is more than clothing. It is confidence,
+   creativity and self-expression.
+  </p>
+  <p>
+   Our collections bring together modern trends and timeless
+   styles to help every woman express her unique personality.
+  </p>
+  <a href="about.html" class="btn">OUR STORY</a>
+ </div>
+</section>
+
+<section class="banner reveal">
+ <div class="section-label">YOUR STYLE. YOUR STORY.</div>
+ <h2>Elegance Never Goes Out Of Style.</h2>
+ <p>Discover your next favourite look with Velora Fashion.</p>
+ <a href="shop.html" class="btn">SHOP NOW</a>
+</section>
+
+<footer>
+ <h2>VELORA FASHION</h2>
+ <p>Elegance in Every Thread.</p>
+
+ <div class="footer-links">
+  <a href="index.html">Home</a>
+  <a href="shop.html">Shop</a>
+  <a href="about.html">About</a>
+  <a href="contact.html">Contact</a>
+ </div>
+
+ <p>Designed for the woman who defines her own style.</p>
+
+ <div class="copyright">
+  <p>© 2026 Velora Fashion. All Rights Reserved.</p>
+ </div>
+</footer>
+
+<script>
+function toggleMenu() {
+ document.getElementById('navigation').classList.toggle('active');
+}
+
+const observer = new IntersectionObserver((entries) => {
+ entries.forEach(entry => {
+  if(entry.isIntersecting) {
+   entry.target.classList.add('show');
+  }
+ });
+},{threshold:0.12});
+
+document.querySelectorAll('.reveal').forEach(element => {
+ observer.observe(element);
+});
+</script>
+
+</body>
+</html>
