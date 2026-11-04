@@ -39,22 +39,21 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 2.5rem 8%;
+      padding: 1.5rem 8%;
     }
 
-    .logo {
-      font-size: 1.8rem;
-      font-weight: 700;
-      letter-spacing: 6px;
-      color: #f2c4ce;
-      text-transform: uppercase;
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
     }
 
-    .logo span {
-      font-size: 1.1rem;
-      font-weight: 300;
-      letter-spacing: 3px;
-      color: #e2a8b5;
+    .brand-logo {
+      height: 55px;
+      width: auto;
+      object-fit: contain;
+      filter: drop-shadow(0px 2px 8px rgba(242, 196, 206, 0.3));
     }
 
     .nav-links {
@@ -62,7 +61,7 @@
       gap: 2.5rem;
       list-style: none;
       font-family: 'Segoe UI', sans-serif;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       letter-spacing: 2px;
       text-transform: uppercase;
     }
@@ -88,8 +87,15 @@
       padding: 0 1.5rem;
     }
 
+    .hero-logo {
+      max-width: 220px;
+      height: auto;
+      margin-bottom: 1.5rem;
+      filter: drop-shadow(0px 4px 12px rgba(242, 196, 206, 0.2));
+    }
+
     .hero h1 {
-      font-size: 4.5rem;
+      font-size: 4rem;
       letter-spacing: 8px;
       margin-bottom: 1rem;
       text-transform: uppercase;
@@ -101,7 +107,7 @@
 
     .hero p {
       font-family: 'Segoe UI', sans-serif;
-      font-size: 1.1rem;
+      font-size: 1.05rem;
       color: #b5b3bc;
       max-width: 550px;
       margin-bottom: 2.5rem;
@@ -173,7 +179,7 @@
     }
 
     @media (max-width: 768px) {
-      .hero h1 { font-size: 2.8rem; }
+      .hero h1 { font-size: 2.5rem; }
       .nav-links { display: none; }
     }
   </style>
@@ -186,7 +192,10 @@
   <!-- Content -->
   <div class="content">
     <nav>
-      <div class="logo">VELORA <span>FASHION</span></div>
+      <a href="#" class="logo-container">
+        <!-- Replace 'logo.png' with your uploaded logo image filename -->
+        <img src="logo.png" alt="VELORA FASHION" class="brand-logo" onerror="this.style.display='none'">
+      </a>
       <ul class="nav-links">
         <li><a href="#couture">Couture</a></li>
         <li><a href="#pret">Ready to Wear</a></li>
@@ -196,6 +205,8 @@
     </nav>
 
     <section class="hero">
+      <!-- Displays logo in hero section as well -->
+      <img src="logo.png" alt="VELORA FASHION Logo" class="hero-logo" onerror="this.style.display='none'">
       <h1>Elegance Defined</h1>
       <p>Discover sophisticated womenswear crafted for timeless style, flawless silhouettes, and effortless luxury.</p>
       <button class="btn">View New Arrivals</button>
@@ -237,7 +248,7 @@
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-    // 2. 3D Elegant Gem / Diamond Geometry (High Fashion Vibe)
+    // 2. 3D Elegant Gem / Diamond Geometry
     const geometry = new THREE.OctahedronGeometry(1.6, 2);
     const material = new THREE.MeshStandardMaterial({
       color: 0xf2c4ce,
@@ -268,7 +279,7 @@
     const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
     scene.add(particlesMesh);
 
-    // 3. Warm Studio Lighting
+    // 3. Lighting
     const pointLight = new THREE.PointLight(0xfff0f5, 1.2);
     pointLight.position.set(4, 4, 4);
     scene.add(pointLight);
@@ -276,7 +287,7 @@
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
     scene.add(ambientLight);
 
-    // 4. Mouse Interaction (Parallax)
+    // 4. Mouse Interaction
     let mouseX = 0;
     let mouseY = 0;
 
@@ -291,11 +302,9 @@
     function animate() {
       const elapsedTime = clock.getElapsedTime();
 
-      // Slow elegant rotation
       fashionGem.rotation.x = elapsedTime * 0.2;
       fashionGem.rotation.y = elapsedTime * 0.25;
 
-      // Parallax drift following cursor
       fashionGem.position.x += (mouseX * 0.4 - fashionGem.position.x) * 0.05;
       fashionGem.position.y += (mouseY * 0.4 - fashionGem.position.y) * 0.05;
 
